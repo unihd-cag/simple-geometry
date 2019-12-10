@@ -20,6 +20,8 @@ Features
   - translation align
 - Visualize shapes
 
+Read more in the [full documentation](https://unihd-cag.github.io/simple-geometry/).
+
 Example
 -------
 
