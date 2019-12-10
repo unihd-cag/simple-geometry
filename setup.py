@@ -34,3 +34,4 @@ if __name__ == '__main__':
             "Topic :: Software Development",
             "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         ],
+    )
