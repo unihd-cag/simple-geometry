@@ -1,5 +1,4 @@
 from setuptools import setup
-from sys import version_info
 
 version = '0.1.1'
 
@@ -7,10 +6,6 @@ version = '0.1.1'
 if __name__ == '__main__':
     with open('README.md') as fin:
         long_description = fin.read()
-
-    dependencies = []
-    if version_info < (3, 7):
-        dependencies.append('dataclasses')
 
     setup(
         name='simple-geometry',
@@ -22,7 +17,7 @@ if __name__ == '__main__':
         long_description_content_type='text/markdown',
         package_data={'geometry': ['py.typed']},
         packages=['geometry'],
-        install_requires=dependencies,
+        install_requires=["dataclasses ; python_version<'3.7'"],
         classifiers=[
             "Development Status :: 4 - Beta",
             "Programming Language :: Python :: 3",
