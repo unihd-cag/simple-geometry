@@ -361,3 +361,65 @@ class Group(HasUserData, AppendMany[Shape], BaseGroup):
         for i in range(1, times):
             setattr(copy, target, getattr(copy, source))
             yield i, copy.copy()
+
+    def _flip_horizontally(self) -> None:
+        x = self.x
+
+        for shape in self.shapes:
+            distance = shape.x - x
+            shape.x = x - distance
+
+            if isinstance(shape, Group):
+                shape._flip_horizontally()
+
+    def _flip_vertically(self) -> None:
+        y = self.y
+
+        for shape in self.shapes:
+            distance = shape.y - y
+            shape.y = y - distance
+
+            if isinstance(shape, Group):
+                shape._flip_vertically()
+
+    def flip(self, *, horizontally: bool = False, vertically: bool = False) -> None:
+        """
+        Mirror the shapes in this group at the center lines of this group.
+
+        Either horizontally or vertically or both.
+
+        Note: this actually modified the contained shapes. If you don't want
+        that behaviour, copy the group first: ``group.copy().flip(...)``
+
+        ::
+
+            E.g. a horizontal flip
+
+            +----+----+     +----+----+
+            |    |    |     |    |    |
+            +----+    |  => |    +----+
+            |    +----+     |----+    |
+            |    |    |     |    |    |
+            +----+----+     +----+----+
+
+        >>> top_left = Rect[0:1, 2:3]
+        >>> bottom_right = Rect[1:2, 0:1]
+        >>> g = Group([top_left, bottom_right])
+        >>> g.flip(horizontally=True)
+
+        >>> top_left  # is now top right
+        [1:2, 2:3]
+        >>> bottom_right  # is now bottom left
+        [0:1, 0:1]
+
+        >>> g.flip(vertically=True)
+        >>> top_left  # is now bottom right
+        [1:2, 0:1]
+        >>> bottom_right  # is now top left
+        [0:1, 2:3]
+        """
+
+        if horizontally:
+            self._flip_horizontally()
+        if vertically:
+            self._flip_vertically()
