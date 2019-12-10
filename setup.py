@@ -1,7 +1,7 @@
 from setuptools import setup
 from sys import version_info
 
-version = '0.1.0'
+version = '0.1.1'
 
 
 if __name__ == '__main__':
