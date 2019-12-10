@@ -1,4 +1,4 @@
-Python Geometry ![Build](https://github.com/nielsbuwen/geometry/workflows/Python%20package/badge.svg)
+Python Geometry ![Build](https://github.com/unihd-cag/simple-geometry/workflows/Python%20package/badge.svg)
 =====================================================================================================
 
 Install
