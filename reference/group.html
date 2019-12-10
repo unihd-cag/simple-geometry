@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Group &#8212; Simple Geometry 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Canvas" href="canvas.html" />
+    <link rel="prev" title="Path Segments" href="segment.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="group">
+<h1>Group<a class="headerlink" href="#group" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="geometry.Group">
+<em class="property">class </em><code class="sig-prename descclassname">geometry.</code><code class="sig-name descname">Group</code><span class="sig-paren">(</span><em class="sig-param">shapes: List[Union[geometry.rect.Rect</em>, <em class="sig-param">geometry.path.Segment</em>, <em class="sig-param">Group]] = &lt;factory&gt;</em>, <em class="sig-param">bbox: Optional[geometry.rect.Rect] = None</em>, <em class="sig-param">user_data: Any = None</em><span class="sig-paren">)</span><a class="headerlink" href="#geometry.Group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a collection of shapes or nested groups.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Group</span><span class="p">()</span>
+<span class="go">{}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="go">{[-1:1, -2:2]} [-1:1, -2:2]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">20</span><span class="p">]])</span>
+<span class="go">{[0:1, 0:1], [9:10, 19:20]} [0:10, 0:20]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="go">{[0:3, 0:3], [-1:1, -1:1]} [-1:3, -1:3]</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The group does not keep track of changes to the contained shapes.
+If you manually change shapes that are inside a group, you must <a class="reference internal" href="#geometry.Group.update" title="geometry.Group.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a>
+the group.</p>
+</div>
+<dl class="method">
+<dt id="geometry.Group.path_from_points">
+<em class="property">classmethod </em><code class="sig-name descname">path_from_points</code><span class="sig-paren">(</span><em class="sig-param">thickness: Union[int, float], *points: geometry.point.Point, user_data: Any = None</em><span class="sig-paren">)</span> &#x2192; geometry.group.Group<a class="headerlink" href="#geometry.Group.path_from_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Path (Group of Segments) from a list of absolute points.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                 <span class="n">end</span>
+             <span class="o">+----</span><span class="n">O</span><span class="o">----+</span>
+             <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>
+         <span class="o">+---+----|----|</span>    <span class="o">---</span>
+         <span class="o">|</span>   <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>     <span class="o">|</span>
+<span class="n">start</span> <span class="o">-&gt;</span> <span class="n">O</span><span class="o">--------</span><span class="n">O</span><span class="o">----+</span>   <span class="n">thickness</span>
+         <span class="o">|</span>   <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>     <span class="o">|</span>
+         <span class="o">+--------+----+</span>    <span class="o">---</span>
+</pre></div>
+</div>
+<p><cite>O</cite> are the given points</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">path_from_points</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[0:11, -1:1] (right)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">[9:11, -1:10] (up)</span>
+</pre></div>
+</div>
+<p>Duplicating consecutive points are skipped
+&gt;&gt;&gt; Group.path_from_points(2, Point(0, 0), Point(5, 0), Point(5, 0), Point(5, 5))
+{[0:6, -1:1] (right), [4:6, -1:5] (up)} …</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.path_from_vectors">
+<em class="property">classmethod </em><code class="sig-name descname">path_from_vectors</code><span class="sig-paren">(</span><em class="sig-param">thickness: Union[int, float], start: geometry.point.Point, *edges: geometry.point.Point, user_data: Any = None</em><span class="sig-paren">)</span> &#x2192; geometry.group.Group<a class="headerlink" href="#geometry.Group.path_from_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Path (Group of Segments) from a starting point and cumulative
+directions.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Direction</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">right</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">right</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">path_from_vectors</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">right</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">right</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[0:11, -1:1] (right)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">[9:30, -1:1] (right)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.append">
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">shape: Union[geometry.rect.Rect, geometry.path.Segment, Group]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#geometry.Group.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add one shape to the group. The bounding box will be updated.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">bbox</span>
+<span class="go">[0:2, 0:3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rect</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">bbox</span>
+<span class="go">[0:12, 0:3]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.bottom">
+<em class="property">property </em><code class="sig-name descname">bottom</code><a class="headerlink" href="#geometry.Group.bottom" title="Permalink to this definition">¶</a></dt>
+<dd><p>The bottom edge of the rect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Rect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">bottom</span>
+<span class="go">3.0</span>
+</pre></div>
+</div>
+<p>Assigning the edge translates the whole rect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span>
+<span class="go">[1:2, 10:11]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><em class="sig-param">user_data: Any = &lt;object object&gt;</em><span class="sig-paren">)</span> &#x2192; Self<a class="headerlink" href="#geometry.Group.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the rect or any other shape.
+You can specify the copy behaviour for the user data object.</p>
+<p>The default is a shallow copy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Rect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;my&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">Rect</span><span class="o">.</span><span class="n">shallow_copy</span><span class="p">)</span>
+<span class="go">[0:1, 0:1] [&#39;my&#39;, &#39;user&#39;, &#39;data&#39;]</span>
+</pre></div>
+</div>
+<p>You can force a deep copy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="o">...</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">Rect</span><span class="o">.</span><span class="n">deep_copy</span><span class="p">)</span>
+<span class="go">[0:1, 0:1] [...]</span>
+</pre></div>
+</div>
+<p>You can pass the user data without copying</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="o">...</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">Rect</span><span class="o">.</span><span class="n">keep</span><span class="p">)</span>
+<span class="go">[0:1, 0:1] [...]</span>
+</pre></div>
+</div>
+<p>And you can supply a completely new user data object</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="o">...</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;completely new&#39;</span><span class="p">)</span>
+<span class="go">[0:1, 0:1] &#39;completely new&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.extend">
+<code class="sig-name descname">extend</code><span class="sig-paren">(</span><em class="sig-param">items: Iterable[Item]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#geometry.Group.extend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append items from an iterable to the collection.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">container</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>This is equivalent to</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+<span class="gp">... </span>    <span class="n">container</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>E.g. Groups support these methods</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Group</span><span class="p">,</span> <span class="n">Rect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span>
+<span class="go">{[-1:1, -2:2], [-2:2, -1:1]} ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.extend_star">
+<code class="sig-name descname">extend_star</code><span class="sig-paren">(</span><em class="sig-param">*items: Item</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#geometry.Group.extend_star" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append items from var args</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">container</span><span class="o">.</span><span class="n">extend_star</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is equivalent to</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+<span class="gp">... </span>    <span class="n">container</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>E.g. Groups support these methods</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Group</span><span class="p">,</span> <span class="n">Rect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">extend_star</span><span class="p">(</span><span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span>
+<span class="go">{[-1:1, -2:2], [-2:2, -1:1]} ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.grid">
+<code class="sig-name descname">grid</code><span class="sig-paren">(</span><em class="sig-param">x_steps: int</em>, <em class="sig-param">x_direction: str</em>, <em class="sig-param">y_steps: int</em>, <em class="sig-param">y_direction: str</em><span class="sig-paren">)</span> &#x2192; Generator[Tuple[int, int, geometry.group.Group], None, None]<a class="headerlink" href="#geometry.Group.grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Span a grid of copies of this group.</p>
+<p>group.grid(5, ‘right’, 3, ‘down’) will create a grid of 5 times 3 copies</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">XOOOO</span>
+<span class="n">OOOOO</span>
+<span class="n">OOOOO</span>
+</pre></div>
+</div>
+<p>X is the initial group.</p>
+<p>The generator yield a tuple of the column number, row number and the group copy.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">center</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">)]</span>
+<span class="go">[(0, 0), (2, 0), (4, 0), (0, 5), (2, 5), (4, 5)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.height">
+<em class="property">property </em><code class="sig-name descname">height</code><a class="headerlink" href="#geometry.Group.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the bounding box</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">20</span><span class="p">]])</span><span class="o">.</span><span class="n">height</span>
+<span class="go">20.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.left">
+<em class="property">property </em><code class="sig-name descname">left</code><a class="headerlink" href="#geometry.Group.left" title="Permalink to this definition">¶</a></dt>
+<dd><p>The left edge of the rect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Rect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">left</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<p>Assigning the edge translates the whole rect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span>
+<span class="go">[10:11, 3:4]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.right">
+<em class="property">property </em><code class="sig-name descname">right</code><a class="headerlink" href="#geometry.Group.right" title="Permalink to this definition">¶</a></dt>
+<dd><p>The right edge of the rect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Rect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">right</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+<p>Assigning the edge translates the whole rect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span>
+<span class="go">[9:10, 3:4]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.top">
+<em class="property">property </em><code class="sig-name descname">top</code><a class="headerlink" href="#geometry.Group.top" title="Permalink to this definition">¶</a></dt>
+<dd><p>The top edge of the rect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Rect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">top</span>
+<span class="go">4.0</span>
+</pre></div>
+</div>
+<p>Assigning the edge translates the whole rect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span>
+<span class="go">[1:2, 9:10]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.translate">
+<code class="sig-name descname">translate</code><span class="sig-paren">(</span><em class="sig-param">**absolute: Union[int, float, geometry.point.Point, geometry.handles.EdgeHandle, geometry.handles.PointHandle]</em><span class="sig-paren">)</span> &#x2192; geometry.translate.CanTranslate<a class="headerlink" href="#geometry.Group.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates the whole shape.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="n">Rect</span><span class="p">,</span> <span class="n">right</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">bottom_left</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># move the bottom left to the origin</span>
+<span class="go">[0:2, 0:4]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># move the center to the origin</span>
+<span class="go">[-1:1, -2:2]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">right</span><span class="p">)</span>  <span class="c1"># move by 2 (width) to the right</span>
+<span class="go">[1:3, -2:2]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># move by 3 (width + 1) to the right</span>
+<span class="go">[4:6, -2:2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#geometry.Group.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recalculate the bounding box for all contained shapes.</p>
+<p>This is necessary when you manually change a shape after you
+added it to the group.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Group</span><span class="p">([</span><span class="n">r</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">bottom_left</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">bbox</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">bbox</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.width">
+<em class="property">property </em><code class="sig-name descname">width</code><a class="headerlink" href="#geometry.Group.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the bounding box</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">20</span><span class="p">]])</span><span class="o">.</span><span class="n">width</span>
+<span class="go">10.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.x">
+<em class="property">property </em><code class="sig-name descname">x</code><a class="headerlink" href="#geometry.Group.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x coordinate of the center of the bounding box</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">20</span><span class="p">]])</span><span class="o">.</span><span class="n">x</span>
+<span class="go">5.0</span>
+</pre></div>
+</div>
+<p>Setting the x coordinate moves every shape in the group</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[9:11, -1:1]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geometry.Group.y">
+<em class="property">property </em><code class="sig-name descname">y</code><a class="headerlink" href="#geometry.Group.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>The y coordinate of the center of the bounding box</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">Rect</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">20</span><span class="p">]])</span><span class="o">.</span><span class="n">y</span>
+<span class="go">10.0</span>
+</pre></div>
+</div>
+<p>Setting the y coordinate moves every shape in the group</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Group</span><span class="p">([</span><span class="n">Rect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[-1:1, 9:11]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Simple Geometry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rect.html">Rectangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment.html">Path Segments</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canvas.html">Canvas</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Reference</a><ul>
+      <li>Previous: <a href="segment.html" title="previous chapter">Path Segments</a></li>
+      <li>Next: <a href="canvas.html" title="next chapter">Canvas</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Niels Buwen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/reference/group.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
