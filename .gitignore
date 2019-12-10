@@ -1,0 +1,14 @@
+.idea/*
+.mypy_cache/*
+.tox/*
+env/*
+*.pyc
+geometry.egg-info/*
+simple_geometry.egg-info/*
+test.py
+
+docs/_build/*
+
+**/.hypothesis/*
+**/.coverage
+**/htmlcov/*
