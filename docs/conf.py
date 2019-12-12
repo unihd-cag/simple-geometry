@@ -1,3 +1,7 @@
+from sys import path
+
+path.insert(0, '..')
+
 project = 'Simple Geometry'
 copyright = '2019, Niels Buwen'
 author = 'Niels Buwen'
