@@ -1,5 +1,8 @@
-Python Geometry ![Build](https://github.com/unihd-cag/simple-geometry/workflows/Python%20package/badge.svg)
-=====================================================================================================
+Python Geometry 
+===============
+
+[![PyPI version](https://badge.fury.io/py/rodlayout.svg)](https://badge.fury.io/py/rodlayout)
+![Build](https://github.com/unihd-cag/simple-geometry/workflows/Python%20package/badge.svg)
 
 Install
 -------
