@@ -1,6 +1,10 @@
 from setuptools import setup
 
-version = '0.1.2'
+
+with open('geometry/version.py') as fin:
+    data = {}
+    exec(fin.read(), data)
+    version = data['__version__']
 
 
 if __name__ == '__main__':
