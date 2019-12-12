@@ -1,14 +1,6 @@
-from sys import path
-
-path.insert(0, '..')
-from setup import version as package_version
-
-
 project = 'Simple Geometry'
 copyright = '2019, Niels Buwen'
 author = 'Niels Buwen'
-version = package_version
-release = version
 
 extensions = ['sphinx.ext.intersphinx', 'sphinx.ext.autodoc']
 
