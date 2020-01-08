@@ -38,30 +38,30 @@
 <dt id="geometry.Point">
 <em class="property">class </em><code class="sig-prename descclassname">geometry.</code><code class="sig-name descname">Point</code><a class="headerlink" href="#geometry.Point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a 2D point in space, consisting of an x- and a y-coordinate</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="go">(10, 20)</span>
 </pre></div>
 </div>
 <p>Vector is an alias for the Point type</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Vector</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Vector</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="go">(4, 5)</span>
 </pre></div>
 </div>
 <p>This class is implemented as a NamedTuple. This means:</p>
 <p>You can use it like a tuple</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="go">4</span>
 </pre></div>
 </div>
 <p>Its fields are named</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">x</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">x</span>
 <span class="go">4</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">y</span>
 <span class="go">5</span>
 </pre></div>
 </div>
 <p>It is immutable</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
@@ -85,7 +85,7 @@
 <dt id="geometry.Point.__add__">
 <code class="sig-name descname">__add__</code><span class="sig-paren">(</span><em class="sig-param">point: geometry.point.Point</em><span class="sig-paren">)</span> &#x2192; geometry.point.Point<a class="headerlink" href="#geometry.Point.__add__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add two points component wise</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">+</span> <span class="n">Point</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">+</span> <span class="n">Point</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="go">(110, 220)</span>
 </pre></div>
 </div>
@@ -95,7 +95,7 @@
 <dt id="geometry.Point.__sub__">
 <code class="sig-name descname">__sub__</code><span class="sig-paren">(</span><em class="sig-param">point: geometry.point.Point</em><span class="sig-paren">)</span> &#x2192; geometry.point.Point<a class="headerlink" href="#geometry.Point.__sub__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Subtract two points component wise</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">-</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">-</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">(9, 18)</span>
 </pre></div>
 </div>
@@ -105,7 +105,7 @@
 <dt id="geometry.Point.__mul__">
 <code class="sig-name descname">__mul__</code><span class="sig-paren">(</span><em class="sig-param">factor: Union[int, float]</em><span class="sig-paren">)</span> &#x2192; geometry.point.Point<a class="headerlink" href="#geometry.Point.__mul__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply a point with a factor</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
 <span class="go">(8, 12)</span>
 </pre></div>
 </div>
@@ -115,7 +115,7 @@
 <dt id="geometry.Point.__rmul__">
 <code class="sig-name descname">__rmul__</code><span class="sig-paren">(</span><em class="sig-param">factor: Union[int, float]</em><span class="sig-paren">)</span> &#x2192; geometry.point.Point<a class="headerlink" href="#geometry.Point.__rmul__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply a point with a factor from the left</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">4</span> <span class="o">*</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">4</span> <span class="o">*</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">(8, 12)</span>
 </pre></div>
 </div>
@@ -125,7 +125,7 @@
 <dt id="geometry.Point.__floordiv__">
 <code class="sig-name descname">__floordiv__</code><span class="sig-paren">(</span><em class="sig-param">factor: Union[int, float]</em><span class="sig-paren">)</span> &#x2192; geometry.point.Point<a class="headerlink" href="#geometry.Point.__floordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divide the components of a point by a factor (floor division)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
 <span class="go">(1, 1)</span>
 </pre></div>
 </div>
@@ -135,7 +135,7 @@
 <dt id="geometry.Point.__truediv__">
 <code class="sig-name descname">__truediv__</code><span class="sig-paren">(</span><em class="sig-param">factor: Union[int, float]</em><span class="sig-paren">)</span> &#x2192; geometry.point.Point<a class="headerlink" href="#geometry.Point.__truediv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divide the components of a point by a factor</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 <span class="go">(1.0, 1.5)</span>
 </pre></div>
 </div>
@@ -145,7 +145,7 @@
 <dt id="geometry.Point.__matmul__">
 <code class="sig-name descname">__matmul__</code><span class="sig-paren">(</span><em class="sig-param">other: geometry.point.Point</em><span class="sig-paren">)</span> &#x2192; Union[int, float]<a class="headerlink" href="#geometry.Point.__matmul__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply two points (dot product)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">@</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">@</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">8</span>
 </pre></div>
 </div>
@@ -155,7 +155,7 @@
 <dt id="geometry.Point.__neg__">
 <code class="sig-name descname">__neg__</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; geometry.point.Point<a class="headerlink" href="#geometry.Point.__neg__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Negate the components of a point</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">(-1, -2)</span>
 </pre></div>
 </div>
@@ -165,7 +165,7 @@
 <dt id="geometry.Point.__abs__">
 <code class="sig-name descname">__abs__</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Union[int, float]<a class="headerlink" href="#geometry.Point.__abs__" title="Permalink to this definition">¶</a></dt>
 <dd><p>The absolute value of a point: the length of the point</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="go">5.0</span>
 </pre></div>
 </div>
@@ -175,7 +175,7 @@
 <dt id="geometry.Point.yx">
 <em class="property">property </em><code class="sig-name descname">yx</code><a class="headerlink" href="#geometry.Point.yx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transpose a point, i.e. flip x and y</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">yx</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">yx</span>
 <span class="go">(2, 1)</span>
 </pre></div>
 </div>
@@ -185,7 +185,7 @@
 <dt id="geometry.Point.length">
 <em class="property">property </em><code class="sig-name descname">length</code><a class="headerlink" href="#geometry.Point.length" title="Permalink to this definition">¶</a></dt>
 <dd><p>The length of the point</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">length</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">length</span>
 <span class="go">5.0</span>
 </pre></div>
 </div>
@@ -195,7 +195,7 @@
 <dt id="geometry.Point.normalized">
 <em class="property">property </em><code class="sig-name descname">normalized</code><a class="headerlink" href="#geometry.Point.normalized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a copy of the point with the same direction but length 1.0</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span>
 <span class="go">(0.707..., 0.707...)</span>
 </pre></div>
 </div>
@@ -272,7 +272,7 @@
       &copy;2019, Niels Buwen.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
