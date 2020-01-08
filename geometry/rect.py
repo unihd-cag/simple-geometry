@@ -226,16 +226,19 @@ class BaseRect(CanTranslate):
 
         >>> Rect[0:1, 0:1].intersection(Rect[1:2, 1:2]) is None
         True
+
+        >>> Rect[0:1, 0:1].intersection(Rect[2:3, 2:3]) is None
+        True
         """
         left = max(self.left, rect.left)
         right = min(self.right, rect.right)
         bottom = max(self.bottom, rect.bottom)
         top = min(self.top, rect.top)
-        result = Rect.from_edges(left, right, bottom, top)
 
-        if result.width > 0 and result.height > 0:
-            return result
-        return None
+        if left >= right or bottom >= top:
+            return None
+
+        return Rect.from_edges(left, right, bottom, top)
 
     def union(self, rect: 'Rect') -> Optional['Rect']:
         """
