@@ -5,6 +5,7 @@ Reference
     :glob:
 
     point
+    size
     rect
     segment
     group

@@ -1,4 +1,5 @@
 from .point import Point, Number
+from .size import Size
 from .handles import top, left, bottom, right, bottom_left, bottom_right, top_left
 from .handles import top_right, width, height, out, in_
 from .canvas import Canvas
@@ -9,6 +10,7 @@ from .path import Segment, Direction
 
 __all__ = [
     'Point',
+    'Size',
     'Number',
     'Rect',
     'left',
